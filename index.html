@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gizlock</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/theme.js"></script>
+</head>
+<body class="fade-in">
+    <div class="container">
+        <div class="site-header">
+            <button class="theme-toggle" onclick="toggleTheme()" data-tooltip="Toggle Theme">🌓</button>
+            <h1>Gizlock</h1>
+            <ul class="benefits-list">
+                <li><strong>Zero Footprint:</strong> No servers, no accounts, and no databases.</li>
+                <li><strong>Total Privacy:</strong> Mathematically unbreakable AES-256 encryption.</li>
+                <li><strong>Censorship-Resistant:</strong> The content lives completely offline inside the link.</li>
+            </ul>
+            <p class="explainer-text">
+                <strong>How it works:</strong> Gizlock is a completely static tool built entirely on standard HTML, CSS, and JavaScript — no backend, no database, no data ever sent or received. Everything happens directly inside your own browser. When you write a page, your device generates a unique cryptographic key and mathematically encrypts your text locally. <strong>Absolutely no data is ever sent to or received from a server.</strong> The resulting encrypted payload is compressed and embedded entirely within the web URL itself. When a reader opens the link, their browser performs the local decompression and decryption instantly.
+            </p>
+            <div class="disclaimer-box">
+                <strong>DISCLAIMER:</strong> This tool is free and open-source, meaning the website will never go down. However, any file or image shown on created pages is not hosted here; they are embedded from a 3rd party website by the creator of the link. We are not responsible for any content generated. Because all data is mathematically encrypted in the URL, there is no way for us to moderate or take down any pages.
+            </div>
+        </div>
+
+        <header>
+            <input type="text" id="title" placeholder="Title" autocomplete="off">
+            <input type="text" id="author" placeholder="Author name (optional)" autocomplete="off">
+        </header>
+
+        <div class="toolbar">
+            <button class="tool-btn" data-tooltip="Bold" onmousedown="event.preventDefault();" onclick="document.execCommand('bold', false, null)">B</button>
+            <button class="tool-btn" data-tooltip="Italic" onmousedown="event.preventDefault();" onclick="document.execCommand('italic', false, null)">I</button>
+            <button class="tool-btn" data-tooltip="Underline" onmousedown="event.preventDefault();" onclick="document.execCommand('underline', false, null)">U</button>
+            <button class="tool-btn" data-tooltip="Strikethrough" onmousedown="event.preventDefault();" onclick="document.execCommand('strikeThrough', false, null)">S</button>
+            <span class="toolbar-divider">|</span>
+            <button class="tool-btn" data-tooltip="Heading 1" onmousedown="event.preventDefault();" onclick="document.execCommand('formatBlock', false, 'H1')">H1</button>
+            <button class="tool-btn" data-tooltip="Heading 2" onmousedown="event.preventDefault();" onclick="document.execCommand('formatBlock', false, 'H2')">H2</button>
+            <button class="tool-btn" data-tooltip="Toggle blockquote — click again on quoted text to remove" onmousedown="event.preventDefault();" onclick="document.execCommand('formatBlock', false, 'BLOCKQUOTE')">Quote</button>
+            <span class="toolbar-divider">|</span>
+            <button class="tool-btn" data-tooltip="Bullet List" onmousedown="event.preventDefault();" onclick="document.execCommand('insertUnorderedList', false, null)">List</button>
+            <button class="tool-btn" data-tooltip="Numbered List" onmousedown="event.preventDefault();" onclick="document.execCommand('insertOrderedList', false, null)">1.</button>
+            <span class="toolbar-divider">|</span>
+            <button class="tool-btn" data-tooltip="Embed a direct image link (.jpg, .png, .gif, .svg, .webp, .avif, .apng)" onmousedown="event.preventDefault();" onclick="openModal()">File Image</button>
+        </div>
+
+        <div id="editor" contenteditable="true" placeholder="Start typing your story..."></div>
+
+        <div class="publish-section">
+            <div class="setting-group">
+                <input type="checkbox" id="use-password">
+                <label for="use-password" data-tooltip="Require a password to view this page">Protect with password</label>
+                <input type="password" id="password-input" placeholder="Enter password" style="display:none;" autocomplete="new-password">
+            </div>
+            <div class="setting-group">
+                <input type="checkbox" id="enable-from">
+                <label for="enable-from" data-tooltip="Set a date and time before which this link cannot be opened. Uses your local time.">Valid From:</label>
+                <input type="datetime-local" id="valid-from" style="display:none;">
+            </div>
+            <div class="setting-group">
+                <input type="checkbox" id="enable-until">
+                <label for="enable-until" data-tooltip="Set an expiration date and time. After this point the link will permanently stop working.">Valid Until:</label>
+                <input type="datetime-local" id="valid-until" style="display:none;">
+            </div>
+            <div class="setting-group" id="hide-times-group" style="display:none;">
+                <input type="checkbox" id="hide-times">
+                <label for="hide-times" data-tooltip="Hide exact opening or expiration times from the viewer. They will only see 'Access Denied' without a reason.">Hide times on viewer page</label>
+            </div>
+            <button id="publish-btn" class="primary-btn">Create Secure Link</button>
+        </div>
+
+        <div id="result-section">
+            <p>Your secure page is ready! Copy and share this link:</p>
+            <textarea id="generated-link" readonly></textarea>
+            <button onclick="copyLink()" class="tool-btn">Copy Link</button>
+        </div>
+
+        <div class="site-footer">
+            <a href="https://github.com/sahinguclu" target="_blank" data-tooltip="Gizlock is created by Şahin Güçlü. Check out his GitHub!">Made by Şahin Güçlü with ❤️</a>
+            <span class="footer-divider">|</span>
+            <a href="https://github.com/sahinguclu/Gizlock" target="_blank" data-tooltip="Gizlock is open-source. View the source code on GitHub!">Source Code</a>
+        </div>
+    </div>
+
+    <div id="image-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Insert Image Link</h3>
+            <p class="modal-desc">Only direct website links ending in supported file extensions are allowed: <b>.jpeg, .jpg, .png, .gif, .svg, .webp, .avif, .apng</b>.<br><br><i>Note: Video formats and PDFs are NOT allowed.</i></p>
+            <input type="url" id="image-url-input" placeholder="https://example.com/image.jpg">
+            <p id="modal-error" class="error-text"></p>
+            <div class="modal-actions">
+                <button onclick="closeModal()" class="cancel-btn">Cancel</button>
+                <button onclick="insertImage()" class="confirm-btn">Insert</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/lz-string.js"></script>
+    <script src="js/crypto.js"></script>
+    <script src="js/editor.js"></script>
+</body>
+</html>

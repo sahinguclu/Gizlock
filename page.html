@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page is locked - Gizlock</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/theme.js"></script>
+</head>
+<body class="fade-in">
+    <div class="container viewer-container">
+        <div class="site-header" style="margin-bottom: 20px; min-height: 44px;">
+            <button class="theme-toggle" onclick="toggleTheme()" data-tooltip="Toggle Theme">🌓</button>
+        </div>
+
+        <div id="time-lock-message" style="text-align: center; padding: 40px;">
+            <h2 id="time-lock-title"></h2>
+            <p id="time-lock-desc" style="color: var(--gray);"></p>
+        </div>
+
+        <div id="password-prompt">
+            <h2>This page is encrypted.</h2>
+            <p style="color: var(--gray);">Please enter the password to decrypt the contents.</p>
+            <input type="password" id="viewer-password" placeholder="Enter password">
+            <button id="unlock-btn" class="primary-btn" style="margin-top: 15px;">Unlock</button>
+            <p id="error-msg" class="error-text"></p>
+        </div>
+
+        <article id="content-display">
+            <h1 id="display-title" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 5px;"></h1>
+            <p id="display-author" style="color: var(--gray); margin-bottom: 30px;"></p>
+            <div id="display-body" style="font-size: 1.1rem;"></div>
+        </article>
+
+        <div class="site-footer">
+            <a href="index.html" data-tooltip="Want to write your own zero-trace article? Create one here!">Create your own page</a>
+            <span class="footer-divider">|</span>
+            <a href="https://github.com/sahinguclu" target="_blank" data-tooltip="Gizlock is created by Şahin Güçlü. Check out his GitHub!">Made by Şahin Güçlü with ❤️</a>
+            <span class="footer-divider">|</span>
+            <a href="https://github.com/sahinguclu/Gizlock" target="_blank" data-tooltip="Gizlock is open-source. View the source code on GitHub!">Source Code</a>
+        </div>
+    </div>
+
+    <script src="js/lz-string.js"></script>
+    <script src="js/crypto.js"></script>
+    <script src="js/viewer.js"></script>
+</body>
+</html>
