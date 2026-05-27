@@ -2,7 +2,7 @@
 
 **A serverless, zero-database encrypted publishing tool. Write a page. Share a link. Nothing is stored anywhere.**
 
-🔗 **[sahinguclu.github.io/Gizlock](https://sahinguclu.github.io/Gizlock)** — or self-host it yourself in under a minute.
+🔗 **[gizlock.pages.dev](https://gizlock.pages.dev)** — or self-host it yourself in under a minute.
 
 ---
 
